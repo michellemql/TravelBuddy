@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <title>Traveler Dashboard</title>
+</head>
+<body>
+    <h2>Hello, {{user.username}} !</h2>
+    <p style="margin-left: 20px;"><a href='/logout'>Log out</a> | <a href="/add">Add Travel Plan</a></p>
+        {% if messages %}
+            <ul>{% for error in messages %}
+                    <li class="error">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h3>Your Travel Schedules</h3>
+        {% if travels %}
+            {% if user.planned_travels.count > 0 %}
+                <table>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th colspan="2">Plan</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for travel in user.planned_travels.all %}
+                        {% if travel.planner.id == user.id %}
+                            <tr>
+                                <td><a href='/show/{{travel.id}}'>{{travel.destination}}</a></td>
+                                <td>{{travel.start_date}}</td>
+                                <td>{{travel.end_date}}</td>
+                                <td colspan="2">{{travel.description}}</td>
+                                <td>
+                                    <form action='/delete' method='POST'>
+                                        {% csrf_token %}
+                                        <input type="hidden" name="destination" value="{{travel.id}}">
+                                        <input type="hidden" name="traveler" value="{{id}}">
+                                        <input type="submit" name="delete" value="Delete" style="width:70px; padding: 5px 8px;">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p style="margin-left: 30px;">You don't have any travel plans.</p>
+            {% endif %}
+        {% endif %}
+        <h3> Joined Trips </h3>
+        {% if travels %}
+            {% if user.joined_travels.count > 0 %}
+                <table>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th colspan="2">Plan</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for travel in user.joined_travels.all %}
+                        <tr>
+                            <td><a href='/show/{{travel.id}}'>{{travel.destination}}</a></td>
+                            <td>{{travel.start_date}}</td>
+                            <td>{{travel.end_date}}</td>
+                            <td colspan="2">{{travel.description}}</td>
+                            <td>
+                                <form action='/unjoin' method='POST'>
+                                    {% csrf_token %} 
+                                    <input type="hidden" name="destination" value="{{travel.id}}">
+                                    <input type="hidden" name="traveler" value="{{id}}">
+                                    <input type="submit" name="leave" value="Leave" style="width:70px; padding: 5px 8px;">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p style="margin-left: 30px;">You haven't join any trips yet. Join one today!</p>
+            {% endif %}
+        {% endif %}
+        <h3 class = "others">Other Users' Travel Plans</h3>
+        {% if travels %}
+            {% if others.count > 0 %}
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Do you Want to Join?</th>
+                    </tr>
+                    {% for travel in others %}
+                        <tr>
+                            <td>{{travel.planner.name}}</td>
+                            <td><a href="/show/{{travel.id}}">{{travel.destination}}</a></td>
+                            <td>{{travel.start_date}}</td>
+                            <td>{{travel.end_date}}</td>
+                            {% if user != travel.planner %}
+                            <td>
+                                <form action = "/join/{{travel.id}}" method="POST">
+                                {% csrf_token %} 
+                                    <input type="hidden" name="destination" value="{{travel.id}}">
+                                    <input type="hidden" name="traveler" value="{{id}}">
+                                    <input type="submit" name="join" value="Join">
+                                </form>
+                            </td>
+                            {%endif%}
+                        </tr>
+                    {%endfor%}
+                </table>
+            {% else %}
+                <p style="margin-left: 30px;">Other users haven't create any travel plans yet. Invite more friends !</p>
+            {% endif %}
+        {% endif %}
+</body>
+</html>

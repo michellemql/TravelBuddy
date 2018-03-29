@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <title>Add Trip</title>
+</head>
+<body>
+    <div id="wrapper">
+        <header><a href="/travels">Home</a> | <a href="/logout">Logout</a></header>
+        <h1>Add a Trip</h1>
+        {% if messages %}
+            <ul>{% for error in messages %}
+                <li class='error'>{{error}}</li>
+                {%endfor%}
+            </ul>
+        {% endif %}
+        <div class="container">
+            <form action='/create' method="POST">
+                {% csrf_token %}
+                <label for="destination">Destination:</label>
+                <input type="text" name="destination"><br/>
+                <p>Description:</p>
+                <textarea name="description" rows="4" cols="60"></textarea><br/>
+                <label for="start_date">Travel Date Form:</label>
+                <input type="date" name="start_date"><br>
+                <label for="end_date">Travel Date To:</label>
+                <input type="date" name="end_date"><br>
+                <button input type="submit" value="Add">Add</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

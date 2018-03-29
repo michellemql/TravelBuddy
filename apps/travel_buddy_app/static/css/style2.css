@@ -1,0 +1,81 @@
+/* traveler dashboard  */
+table{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 5px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+header{
+    margin-right: 100px;
+}
+
+
+/* add trip page */
+#wrapper{
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border: 1px solid black;
+}
+
+header{
+    text-align: right;
+}
+.container{
+    width:400px;
+    height: 450px;
+    border-radius: 5px;
+    border: 2px solid darkgray;
+    padding: 20px 60px 20px 60px ;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    background-color:white;
+}
+
+h1{
+    margin-left: 50px;
+}
+
+input{
+    width: 200px;
+    padding: 8px 20px;
+    font-size: 12px;
+    margin: 8px 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+button{
+   float:right;
+   width: 20%;
+   padding: 8px 20px;
+   margin-top: 20px;
+   border-radius: 4px;
+   background-color:rgb(250, 168, 68); 
+   
+}
+
+
+.others{
+    border-top: 2px double rgb(81,82,73);
+    padding-top:30px;
+    margin-top: 40px;
+}
+
+.error{
+    color:red;
+    font-size: 14px;
+    margin-left: 70px;
+}

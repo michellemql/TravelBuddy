@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Login and Registration</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="header">
+            <h1>Welcome!</h1>
+        </div>
+        <div class="container">
+            <h2>Register</h2>
+            {% if messages %}
+                <ul>{% for message in messages %}
+                        {% if message.extra_tags == 'register' %}
+                            <li class="error">{{message}}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form action='/register' method='POST'>
+                {% csrf_token %}
+                <label for="name">Name</label>
+                <input type="text" name="name">
+                <label for="username">Username</label>
+                <input type="text" name="username"><br>
+                <label for="password">Password</label>
+                <input type="password" name="password"><br>
+                <label for="confirm_password">Confirm PW</label>
+                <input type="password" name="confirm_password"><br>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <div class="container">
+            <h2>Login</h2>
+            {% if messages %}
+                <ul>{% for message in messages %}
+                        {% if message.extra_tags == 'login' %}
+                            <li class="error">{{message}}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form action='/login' method='POST'>
+                {% csrf_token %}
+                <label for="username">Username</label>
+                <input type="text" name="username"><br>
+                <label for="password">Password</label>
+                <input type="password" name="password"><br>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
